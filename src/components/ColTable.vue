@@ -5,9 +5,14 @@
             <button @click="circuitCut">X</button>
         </header>
         <el-tree
-                :data="data"
+                ref="vueTree"
+                node-key="id"
+                :data="trees"
                 :props="defaultProps"
+                :default-expanded-keys="checkedKeys"
+                :default-checked-keys="checkedKeys"
                 accordion
+                highlight-current
                 @node-click="handleNodeClick">
         </el-tree>
 
@@ -16,64 +21,55 @@
 
 <script>
     export default {
-        name: "ColTable",
+        name: 'ColTable',
+
+        props: {
+            trees: {
+                type: Array,
+                default() {
+                    return []
+                }
+            },
+            idKey: {
+                type: Number,
+                default() {
+                    return 0
+                }
+            }
+        },
 
         data() {
             return {
-                data: [{
-                    id: 1,
-                    label: '一级 1',
-                    children: [{
-                        id: 4,
-                        label: '二级 1-1',
-                        children: [{
-                            id: 9,
-                            label: '三级 1-1-1'
-                        }, {
-                            id: 10,
-                            label: '三级 1-1-2'
-                        }]
-                    }]
-                }, {
-                    id: 2,
-                    label: '一级 2',
-                    children: [{
-                        id: 5,
-                        label: '二级 2-1'
-                    }, {
-                        id: 6,
-                        label: '二级 2-2'
-                    }]
-                }, {
-                    id: 3,
-                    label: '一级 3',
-                    children: [{
-                        id: 7,
-                        label: '二级 3-1'
-                    }, {
-                        id: 8,
-                        label: '二级 3-2'
-                    }]
-                }],
+                checkedKeys: [],
                 defaultProps: {
                     children: 'children',
                     label: 'label'
                 }
-            };
+            }
 
         },
+        computed: {},
 
-        props: {},
+        watch: {
+            idKey() {
+                this.updateInfo()
+            }
+        },
 
         mounted() {
+            this.updateInfo()
         },
 
         methods: {
+            updateInfo() {
+                this.$refs.vueTree.setCurrentKey(this.idKey)
+                this.checkedKeys = [this.idKey]
+            },
+            handleNodeClick(node) {
+                this.$emit('updateIdKey', node.id)
+            },
             circuitCut() {
                 this.$emit('colCut', false)
-            },
-            handleNodeClick(data) {
-                console.log(data);
             }
         }
     }
@@ -87,11 +83,13 @@
         flex-direction: column;
         background: orange;
         height: 100%;
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            button{
+
+            button {
                 width: 20px;
                 height: 20px;
                 cursor: pointer;
