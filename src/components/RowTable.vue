@@ -17,11 +17,11 @@
             </el-menu>
             <el-tag
                     v-for="tag in dynamicTags"
-                    :key="tag"
+                    :key="tag.id"
                     closable
                     :disable-transitions="false"
-                    @close="handleClose(tag)">
-                    {{tag}}
+                    @close="handleClose(tag.id)">
+                    {{tag.label}}
             </el-tag>
         </div>
         <div class="right">
@@ -35,7 +35,7 @@
         name: "RowTable",
         data() {
             return {
-                dynamicTags: ['标签一', '标签二', '标签三'],
+                dynamicTags: [{id:1, label:'标签一'}, {id:2, label:'标签二'}, {id:3, label:'标签三'}],
                 activeIndex: '1',
                 activeIndex2: '1',
             }
@@ -53,8 +53,16 @@
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
             },
-            handleClose(tag) {
-                this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+            handleClose(id) {
+                let index
+                for (let i=0; i<this.dynamicTags.length; i++) {
+                    if (this.dynamicTags[i].id === id) {
+                        index = i
+                        break
+                    }
+                }
+                this.dynamicTags.splice(index, 1)
+                // this.dynamicTags.splice(this.dynamicTags.id.indexOf(id), 1);
             },
 
         }
