@@ -68,7 +68,9 @@
                 }
             },
             handleNodeClick(nodeKeyObj) {
-                this.$emit('updateIdKey', nodeKeyObj)
+                if (!nodeKeyObj.children) {
+                    this.$emit('updateIdKey', nodeKeyObj)
+                }
             },
             circuitCut() {
                 this.$emit('colCut', false)

@@ -24,7 +24,7 @@
                         closable
                         :disable-transitions="false"
                         :class="{active: clickId === tag.id}"
-                        @click="clickTag(tag.id)"
+                        @click="clickTag(tag)"
                         @close="handleClose(tag.id)">
                     {{tag.label}}
                 </el-tag>
@@ -69,6 +69,7 @@
         watch: {
             nodeKeyObj() {
                 this.updateInfo()
+                this.updateInfoTree()
             }
         },
 
@@ -88,8 +89,8 @@
                     }
                     if (!index) {
                         this.dynamicTags.unshift(this.nodeKeyObj)
-                        this.clickId = this.nodeKeyObj.id
                     }
+                    this.clickId = this.nodeKeyObj.id
                 }
             },
             updateInfoTree() {
@@ -102,11 +103,15 @@
                 this.$emit('rowCut', true)
             },
             handleNodeClick(nodeKeyObj) {
-                this.$emit('updateIdKey', nodeKeyObj)
+                if (!nodeKeyObj.children) {
+                    this.$emit('updateIdKey', nodeKeyObj)
+                }
             },
-            clickTag(id) {
+            clickTag(tag) {
                 if (this.clickId) {
-                    this.clickId = id
+                    this.clickId = tag.id
+                    console.log(tag)
+                    this.$emit('updateIdKey', tag)
                 }
             },
             handleClose(id) {
