@@ -1,7 +1,6 @@
 <template>
     <div class="content">
-        <div>搜索框</div>
-        <div>table</div>
+       内容详情
     </div>
 </template>
 
@@ -30,7 +29,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 600px;
+        min-height: 90vh;
+        font-weight: 600;
+        font-size: 32px;
     }
 
 </style>

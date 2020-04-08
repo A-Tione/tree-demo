@@ -68,12 +68,26 @@
             }
         },
 
+        mounted() {
+            this.treesInfo(this.trees)
+        },
+
         methods: {
             cut(isCut) {
                 this.isCut = isCut
             },
             updateIdKey(nodeKeyObj) {
                 this.nodeKeyObj = nodeKeyObj
+            },
+            treesInfo(item) { // trees初始化
+                item.forEach(value => {
+                    if(value.children) {
+                        if(value.label) {
+                            value.label = value.label + `（${value.children.length}）`
+                            this.treesInfo(value.children)
+                        }
+                    }
+                })
             }
         }
 
@@ -91,12 +105,27 @@
         height: 100vh;
         display: flex;
         .app-left {
-            width: 200px;
+            width: 188px;
             height: 100%;
         }
         .app-right {
             flex: 1;
             height: 100%;
         }
+    }
+    .el-menu.el-menu--horizontal {
+        border: none !important;
+    }
+    .el-submenu__title {
+        height: initial !important;
+        line-height: initial !important;
+    }
+    .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+        background: #F0F5FF;
+        color: #1890FF;
+        font-weight: 600;
+    }
+    .el-tree-node__label {
+        font-size: 12px !important;
     }
 </style>

@@ -3,7 +3,7 @@
         <div class="left">
             <el-menu class="el-menu-demo" mode="horizontal">
                 <el-submenu index="1">
-                    <template slot="title">线路查询</template>
+                    <template slot="title">线路选择</template>
                     <el-tree
                             ref="vueTree2"
                             node-key="id"
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="right">
-            <button @click="circuitCut">X</button>
+            <el-button class="button" type="info" @click="circuitCut" circle></el-button>
         </div>
     </div>
 </template>
@@ -130,21 +130,29 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #42b983;
         width: 100%;
-        height: 100px;
+        height: 48px;
         .left{
             display: flex;
             align-items: center;
             width: 90%;
             .el-menu-demo {
                 width: 120px;
+                height: 24px;
                 margin-right: 20px;
+                display: flex;
+                align-items: center;
             }
             .tags {
+                margin-right: 10px;
                 cursor: pointer;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                color: rgba(0, 0, 0, 0.65);
+                background: white;
                 &.active {
-                    background: orangered;
+                    border: 1px solid #91D5FF;
+                    color: #1890FF;
+                    background: #E6F7FF;
                 }
             }
         }
@@ -153,10 +161,32 @@
             display: flex;
             justify-content: flex-end;
             margin-right: 10px;
-            button{
-                width: 20px;
-                height: 20px;
-                cursor: pointer;
+            .button {
+                position: relative;
+                padding: 0;
+                width: 10px;
+                height: 14px;
+                border: 1px solid rgba(0, 0, 0, 0.65);
+                background: white;
+                border-radius: 0;
+                &::before {
+                    position: absolute;
+                    content: '';
+                    width: 2px;
+                    height: 14px;
+                    top: -1px;
+                    left: -2px;
+                    background: rgba(0, 0, 0, 0.65);
+                }
+                &::after {
+                    position: absolute;
+                    content: '';
+                    width: 1px;
+                    height: 14px;
+                    top: -1px;
+                    left: -4px;
+                    background: rgba(0, 0, 0, 0.65);
+                }
             }
         }
 
