@@ -48,7 +48,6 @@
             }
 
         },
-        computed: {},
 
         watch: {
             idKey() {

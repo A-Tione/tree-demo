@@ -29,11 +29,13 @@
 
     export default {
         name: 'App',
+
         components: {
             ColTable,
             RowTable,
             Blank
         },
+
         data() {
             return {
                 isCut: true,
@@ -66,10 +68,6 @@
             }
         },
 
-        mounted() {
-
-        },
-
         methods: {
             cut(isCut) {
                 this.isCut = isCut
@@ -88,17 +86,14 @@
         padding: 0;
         box-sizing: border-box
     }
-
     #app {
         width: 100%;
         height: 100vh;
         display: flex;
-
         .app-left {
             width: 200px;
             height: 100%;
         }
-
         .app-right {
             flex: 1;
             height: 100%;

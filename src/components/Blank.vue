@@ -30,7 +30,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 600px;
+        min-height: 600px;
     }
 
 </style>

@@ -23,9 +23,10 @@
                         :key="tag.id"
                         closable
                         :disable-transitions="false"
+                        class="tags"
                         :class="{active: clickId === tag.id}"
                         @click="clickTag(tag)"
-                        @close="handleClose(tag.id)">
+                        @close="closeTag(tag.id)">
                     {{tag.label}}
                 </el-tag>
             </div>
@@ -39,17 +40,6 @@
 <script>
     export default {
         name: "RowTable",
-        data() {
-            return {
-                clickId: 0,
-                dynamicTags: [],
-                checkedKeys: [],
-                defaultProps: {
-                    children: 'children',
-                    label: 'label'
-                }
-            }
-        },
 
         props:{
             trees: {
@@ -66,16 +56,23 @@
             }
         },
 
+        data() {
+            return {
+                clickId: 0,
+                dynamicTags: [],
+                checkedKeys: [],
+                defaultProps: {
+                    children: 'children',
+                    label: 'label'
+                }
+            }
+        },
+
         watch: {
             nodeKeyObj() {
                 this.updateInfo()
                 this.updateInfoTree()
             }
-        },
-
-        mounted() {
-            this.updateInfo()
-            this.updateInfoTree()
         },
 
         methods: {
@@ -87,7 +84,7 @@
                             index = 1
                         }
                     }
-                    if (!index) {
+                    if (!index) { //重复tag则不加
                         this.dynamicTags.unshift(this.nodeKeyObj)
                     }
                     this.clickId = this.nodeKeyObj.id
@@ -110,11 +107,10 @@
             clickTag(tag) {
                 if (this.clickId) {
                     this.clickId = tag.id
-                    console.log(tag)
                     this.$emit('updateIdKey', tag)
                 }
             },
-            handleClose(id) {
+            closeTag(id) {
                 let index
                 for (let i=0; i<this.dynamicTags.length; i++) {
                     if (this.dynamicTags[i].id === id) {
@@ -138,18 +134,18 @@
         width: 100%;
         height: 100px;
         .left{
+            display: flex;
+            align-items: center;
+            width: 90%;
             .el-menu-demo {
                 width: 120px;
                 margin-right: 20px;
             }
-            width: 90%;
-            p {
-                margin: 10px;
-            }
-            display: flex;
-            align-items: center;
-            .active {
-                background: orangered;
+            .tags {
+                cursor: pointer;
+                &.active {
+                    background: orangered;
+                }
             }
         }
         .right{
