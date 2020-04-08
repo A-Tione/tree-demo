@@ -30,10 +30,10 @@
                     return []
                 }
             },
-            idKey: {
-                type: Number,
+            nodeKeyObj: {
+                type: Object,
                 default() {
-                    return 0
+                    return {}
                 }
             }
         },
@@ -62,11 +62,13 @@
 
         methods: {
             updateInfo() {
-                this.$refs.vueTree.setCurrentKey(this.idKey)
-                this.checkedKeys = [this.idKey]
+                if (this.nodeKeyObj && this.nodeKeyObj.id) {
+                    this.$refs.vueTree.setCurrentKey(this.nodeKeyObj.id)
+                    this.checkedKeys = [this.nodeKeyObj.id]
+                }
             },
-            handleNodeClick(node) {
-                this.$emit('updateIdKey', node.id)
+            handleNodeClick(nodeKeyObj) {
+                this.$emit('updateIdKey', nodeKeyObj)
             },
             circuitCut() {
                 this.$emit('colCut', false)

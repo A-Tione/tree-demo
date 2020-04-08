@@ -2,13 +2,20 @@
     <div id="app">
         <div v-if="isCut" class="app-left">
             <col-table :trees="trees"
-                       :idKey="idKey"
-                       :checkedKeys="checkedKeys"
+                       :nodeKeyObj="nodeKeyObj"
                        @updateIdKey="updateIdKey"
-                       @colCut="cut"></col-table>
+                       @colCut="cut">
+
+            </col-table>
         </div>
         <div class="app-right">
-            <row-table v-if="!isCut" @rowCut="cut"></row-table>
+            <row-table v-show="!isCut"
+                       :trees=trees
+                       :nodeKeyObj="nodeKeyObj"
+                       @updateIdKey="updateIdKey"
+                       @rowCut="cut">
+
+            </row-table>
             <blank></blank>
         </div>
     </div>
@@ -29,8 +36,7 @@
         data() {
             return {
                 isCut: true,
-                checkedKeys: [10], //选中项
-                idKey: 10,
+                nodeKeyObj: null,
                 trees: [{
                     id: 1,
                     label: '长沙众旺公司',
@@ -67,8 +73,8 @@
             cut(isCut) {
                 this.isCut = isCut
             },
-            updateIdKey(idKey) {
-                this.idKey = idKey
+            updateIdKey(nodeKeyObj) {
+                this.nodeKeyObj = nodeKeyObj
             }
         }
 

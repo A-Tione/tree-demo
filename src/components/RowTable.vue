@@ -1,28 +1,34 @@
 <template>
     <div class="content">
         <div class="left">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-submenu index="2">
-                    <template slot="title">线路萱蕚</template>
-                    <el-menu-item index="2-1">选项1</el-menu-item>
-                    <el-menu-item index="2-2">选项2</el-menu-item>
-                    <el-menu-item index="2-3">选项3</el-menu-item>
-                    <el-submenu index="2-4">
-                        <template slot="title">选项4</template>
-                        <el-menu-item index="2-4-1">选项1</el-menu-item>
-                        <el-menu-item index="2-4-2">选项2</el-menu-item>
-                        <el-menu-item index="2-4-3">选项3</el-menu-item>
-                    </el-submenu>
+            <el-menu class="el-menu-demo" mode="horizontal">
+                <el-submenu index="1">
+                    <template slot="title">线路查询</template>
+                    <el-tree
+                            ref="vueTree2"
+                            node-key="id"
+                            :data="trees"
+                            :props="defaultProps"
+                            :default-expanded-keys="checkedKeys"
+                            :default-checked-keys="checkedKeys"
+                            accordion
+                            highlight-current
+                            @node-click="handleNodeClick">
+                    </el-tree>
                 </el-submenu>
             </el-menu>
-            <el-tag
-                    v-for="tag in dynamicTags"
-                    :key="tag.id"
-                    closable
-                    :disable-transitions="false"
-                    @close="handleClose(tag.id)">
+            <div v-if="dynamicTags">
+                <el-tag
+                        v-for="tag in dynamicTags"
+                        :key="tag.id"
+                        closable
+                        :disable-transitions="false"
+                        :class="{active: clickId === tag.id}"
+                        @click="clickTag(tag.id)"
+                        @close="handleClose(tag.id)">
                     {{tag.label}}
-            </el-tag>
+                </el-tag>
+            </div>
         </div>
         <div class="right">
             <button @click="circuitCut">X</button>
@@ -35,23 +41,73 @@
         name: "RowTable",
         data() {
             return {
-                dynamicTags: [{id:1, label:'标签一'}, {id:2, label:'标签二'}, {id:3, label:'标签三'}],
-                activeIndex: '1',
-                activeIndex2: '1',
+                clickId: 0,
+                dynamicTags: [],
+                checkedKeys: [],
+                defaultProps: {
+                    children: 'children',
+                    label: 'label'
+                }
             }
         },
 
-        props:{},
+        props:{
+            trees: {
+               type: Array,
+               default() {
+                   return []
+               }
+            },
+            nodeKeyObj: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            }
+        },
+
+        watch: {
+            nodeKeyObj() {
+                this.updateInfo()
+            }
+        },
 
         mounted() {
+            this.updateInfo()
+            this.updateInfoTree()
         },
 
         methods: {
+            updateInfo() {
+                let index
+                if (this.nodeKeyObj && this.nodeKeyObj.id) {
+                    for (let i=0; i<this.dynamicTags.length; i++) {
+                        if(this.dynamicTags[i].id === this.nodeKeyObj.id) {
+                            index = 1
+                        }
+                    }
+                    if (!index) {
+                        this.dynamicTags.unshift(this.nodeKeyObj)
+                        this.clickId = this.nodeKeyObj.id
+                    }
+                }
+            },
+            updateInfoTree() {
+                if (this.nodeKeyObj && this.nodeKeyObj.id) {
+                    this.$refs.vueTree2.setCurrentKey(this.nodeKeyObj.id)
+                    this.checkedKeys = [this.nodeKeyObj.id]
+                }
+            },
             circuitCut() {
                 this.$emit('rowCut', true)
             },
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+            handleNodeClick(nodeKeyObj) {
+                this.$emit('updateIdKey', nodeKeyObj)
+            },
+            clickTag(id) {
+                if (this.clickId) {
+                    this.clickId = id
+                }
             },
             handleClose(id) {
                 let index
@@ -62,7 +118,6 @@
                     }
                 }
                 this.dynamicTags.splice(index, 1)
-                // this.dynamicTags.splice(this.dynamicTags.id.indexOf(id), 1);
             },
 
         }
@@ -88,6 +143,9 @@
             }
             display: flex;
             align-items: center;
+            .active {
+                background: orangered;
+            }
         }
         .right{
             width: 10%;
