@@ -10,18 +10,18 @@
                             v-model="filterText">
                         <i slot="prefix" class="el-input__icon el-icon-search"></i>
                     </el-input>
-                    <el-tree
-                            ref="vueTree"
-                            node-key="id"
-                            :data="trees"
-                            :props="defaultProps"
-                            :default-expanded-keys="checkedKeys"
-                            :default-checked-keys="checkedKeys"
-                            :filter-node-method="filterNode"
-                            accordion
-                            highlight-current
-                            @node-click="handleNodeClick">
-                    </el-tree>
+                        <el-tree
+                                ref="vueTree"
+                                node-key="id"
+                                :data="trees"
+                                :props="defaultProps"
+                                :default-expanded-keys="checkedKeys"
+                                :default-checked-keys="checkedKeys"
+                                :filter-node-method="filterNode"
+                                accordion
+                                highlight-current
+                                @node-click="handleNodeClick">
+                        </el-tree>
                 </el-submenu>
             </el-menu>
             <div v-if="dynamicTags">
@@ -101,15 +101,15 @@
                     this.clickId = this.nodeKeyObj.id
                 }
             },
-            filterNode(value, data) {
-                if (!value) return true;
-                return data.label.indexOf(value) !== -1;
-            },
             updateInfoTree() {
                 if (this.nodeKeyObj && this.nodeKeyObj.id) {
                     this.$refs.vueTree.setCurrentKey(this.nodeKeyObj.id)
                     this.checkedKeys = [this.nodeKeyObj.id]
                 }
+            },
+            filterNode(value, data) {
+                if (!value) return true;
+                return data.label.indexOf(value) !== -1;
             },
             circuitCut() {
                 this.$emit('rowCut', true)
@@ -133,8 +133,17 @@
                         break
                     }
                 }
+                this.resetTrees(this.dynamicTags[index].id)
                 this.dynamicTags.splice(index, 1)
             },
+            resetTrees(item) { // 关闭tag，trees初始化
+                if (item === this.clickId) {
+                    for(let i=0;i<this.$refs.vueTree.store._getAllNodes().length;i++){
+                        this.$refs.vueTree.store._getAllNodes()[i].expanded= false;
+                    }
+                    this.$emit('updateIdKey', null)
+                }
+            }
 
         }
     }
