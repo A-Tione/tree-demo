@@ -96,9 +96,6 @@
     @import "src/assets/styles/common";
 
     #app {
-        display: flex;
-        width: 100%;
-        height: 100vh;
         .app-left {
             width: 188px;
             height: 100%;
