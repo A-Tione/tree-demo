@@ -3,7 +3,10 @@
         <div class="left">
             <el-menu class="el-menu-demo" mode="horizontal">
                 <el-submenu index="1">
-                    <template slot="title">线路选择</template>
+                    <template slot="title">
+                        <i slot="prefix" class="icon-class el-input__icon el-icon-location-information"></i>
+                        线路选择
+                    </template>
                     <el-input
                             class="el-input-class"
                             placeholder="搜索部门/线路"
@@ -155,13 +158,13 @@
     .content{
         @include flex-vertical-between;
         width: 100%;
-        height: 48px;
+        height: 60px;
         .left{
             display: flex;
             align-items: center;
             width: 90%;
             .el-menu-demo {
-                width: 120px;
+                width: 140px;
                 height: 32px;
                 margin-right: 20px;
                 display: flex;
