@@ -2,12 +2,13 @@
     <div class="content">
         <header>
             <p>线路选择</p>
-            <el-button class="button" type="info" @click="circuitCut" circle>  </el-button>
+            <el-button class="button" type="info" @click="circuitCut" circle></el-button>
         </header>
         <el-input
-                class="input-class"
+                class="el-input-class"
                 placeholder="搜索部门/线路"
                 v-model="filterText">
+            <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
         <el-tree
                 ref="vueTree"
@@ -21,7 +22,6 @@
                 highlight-current
                 @node-click="handleNodeClick">
         </el-tree>
-
     </div>
 </template>
 
@@ -95,6 +95,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/styles/_variables";
+
     .content {
         font-size: 12px;
         display: flex;
@@ -102,12 +104,10 @@
         height: 100%;
         padding: 16px 12px;
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            @include flex-vertical-between;
             margin-bottom: 12px;
             p {
-                color: rgba(0, 0, 0, 0.85);
+                color: $black;
                 font-weight: 600;
             }
             .button{
@@ -115,7 +115,7 @@
                 padding: 0;
                 width: 14px;
                 height: 10px;
-                border: 1px solid rgba(0, 0, 0, 0.65);
+                border: 1px solid $black;
                 background: white;
                 border-radius: 0;
                 &::before {
@@ -125,7 +125,7 @@
                     height: 2px;
                     top: -2px;
                     left: -1px;
-                    background: rgba(0, 0, 0, 0.65);
+                    background: $black;
                 }
                 &::after {
                     position: absolute;
@@ -134,12 +134,9 @@
                     height: 1px;
                     top: -4px;
                     left: -1px;
-                    background: rgba(0, 0, 0, 0.65);
+                    background: $black;
                 }
             }
-        }
-        .input-class {
-            margin-bottom: 12px;
         }
     }
 </style>

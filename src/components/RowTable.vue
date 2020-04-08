@@ -4,13 +4,20 @@
             <el-menu class="el-menu-demo" mode="horizontal">
                 <el-submenu index="1">
                     <template slot="title">线路选择</template>
+                    <el-input
+                            class="el-input-class"
+                            placeholder="搜索部门/线路"
+                            v-model="filterText">
+                        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                    </el-input>
                     <el-tree
-                            ref="vueTree2"
+                            ref="vueTree"
                             node-key="id"
                             :data="trees"
                             :props="defaultProps"
                             :default-expanded-keys="checkedKeys"
                             :default-checked-keys="checkedKeys"
+                            :filter-node-method="filterNode"
                             accordion
                             highlight-current
                             @node-click="handleNodeClick">
@@ -58,6 +65,7 @@
 
         data() {
             return {
+                filterText: '',
                 clickId: 0,
                 dynamicTags: [],
                 checkedKeys: [],
@@ -72,6 +80,9 @@
             nodeKeyObj() {
                 this.updateInfo()
                 this.updateInfoTree()
+            },
+            filterText(val) {
+                this.$refs.vueTree.filter(val);
             }
         },
 
@@ -90,9 +101,13 @@
                     this.clickId = this.nodeKeyObj.id
                 }
             },
+            filterNode(value, data) {
+                if (!value) return true;
+                return data.label.indexOf(value) !== -1;
+            },
             updateInfoTree() {
                 if (this.nodeKeyObj && this.nodeKeyObj.id) {
-                    this.$refs.vueTree2.setCurrentKey(this.nodeKeyObj.id)
+                    this.$refs.vueTree.setCurrentKey(this.nodeKeyObj.id)
                     this.checkedKeys = [this.nodeKeyObj.id]
                 }
             },
@@ -126,10 +141,10 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/styles/_variables";
+
     .content{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @include flex-vertical-between;
         width: 100%;
         height: 48px;
         .left{
@@ -138,7 +153,7 @@
             width: 90%;
             .el-menu-demo {
                 width: 120px;
-                height: 24px;
+                height: 32px;
                 margin-right: 20px;
                 display: flex;
                 align-items: center;
@@ -147,7 +162,7 @@
                 margin-right: 10px;
                 cursor: pointer;
                 border: 1px solid rgba(0, 0, 0, 0.15);
-                color: rgba(0, 0, 0, 0.65);
+                color: $black;
                 background: white;
                 &.active {
                     border: 1px solid #91D5FF;
@@ -166,7 +181,7 @@
                 padding: 0;
                 width: 10px;
                 height: 14px;
-                border: 1px solid rgba(0, 0, 0, 0.65);
+                border: 1px solid $black;
                 background: white;
                 border-radius: 0;
                 &::before {
@@ -176,7 +191,7 @@
                     height: 14px;
                     top: -1px;
                     left: -2px;
-                    background: rgba(0, 0, 0, 0.65);
+                    background: $black;
                 }
                 &::after {
                     position: absolute;
@@ -185,10 +200,9 @@
                     height: 14px;
                     top: -1px;
                     left: -4px;
-                    background: rgba(0, 0, 0, 0.65);
+                    background: $black;
                 }
             }
         }
-
     }
 </style>

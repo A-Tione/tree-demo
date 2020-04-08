@@ -9,18 +9,17 @@
             </col-table>
         </div>
         <div class="app-right">
-            <row-table v-show="!isCut"
-                       :trees=trees
-                       :nodeKeyObj="nodeKeyObj"
-                       @updateIdKey="updateIdKey"
-                       @rowCut="cut">
+                <row-table v-show="!isCut"
+                           :trees=trees
+                           :nodeKeyObj="nodeKeyObj"
+                           @updateIdKey="updateIdKey"
+                           @rowCut="cut">
 
-            </row-table>
-            <blank></blank>
+                </row-table>
+                <blank></blank>
         </div>
     </div>
 </template>
-
 
 <script>
     import ColTable from './components/ColTable'
@@ -90,20 +89,16 @@
                 })
             }
         }
-
     }
 </script>
 
 <style lang="scss">
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box
-    }
+    @import "src/assets/styles/common";
+
     #app {
+        display: flex;
         width: 100%;
         height: 100vh;
-        display: flex;
         .app-left {
             width: 188px;
             height: 100%;
@@ -112,20 +107,5 @@
             flex: 1;
             height: 100%;
         }
-    }
-    .el-menu.el-menu--horizontal {
-        border: none !important;
-    }
-    .el-submenu__title {
-        height: initial !important;
-        line-height: initial !important;
-    }
-    .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-        background: #F0F5FF;
-        color: #1890FF;
-        font-weight: 600;
-    }
-    .el-tree-node__label {
-        font-size: 12px !important;
     }
 </style>

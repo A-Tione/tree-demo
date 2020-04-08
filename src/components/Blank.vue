@@ -23,13 +23,12 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/styles/_variables";
     .content {
-        background: #2c3e50;
-        display: flex;
+        @include flex-vertical-center;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 90vh;
+        background: #2c3e50;
+        min-height: calc(100vh - 60px);
         font-weight: 600;
         font-size: 32px;
     }

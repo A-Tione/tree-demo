@@ -1,0 +1,91 @@
+
+@import "./_variables";
+
+//  重置浏览器样式
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{
+  margin:0;
+  padding:0;
+}
+*{
+  box-sizing: border-box;
+  outline:none;
+  // word-break: break-word;
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+ul,li {
+  list-style: none;
+}
+video::-internal-media-controls-download-button {
+  display:none;
+}
+video::-webkit-media-controls-enclosure {
+  overflow:hidden;
+}
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px); /* Adjust as needed */
+}
+html {
+  // font-family: SourceHanSansSC-Light,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+  font-family: Microsoft YaHei,SourceHanSansSC-Light,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,SimSun,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: $font-color;
+  overflow-x: auto !important;
+  line-height: 1;
+  height: 100%;
+}
+img{
+  max-width: 100%;
+}
+body{
+  font-size: 14px;
+  height: 100%;
+  // overflow-x: auto !important;
+  min-width: $base;
+}
+#app {
+  width: 100%;
+  height: 100%;
+  
+  font-size: 14px;
+}
+// 清除浮动
+.clearfix {
+  &:after {
+      display: block;
+      clear: both;
+      content: '';
+  }
+}
+
+.el-menu.el-menu--horizontal {
+  border: none !important;
+}
+.el-submenu__title {
+  height: initial !important;
+  line-height: initial !important;
+}
+.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+  background: #F0F5FF;
+  color: #1890FF;
+  font-weight: 600;
+}
+.el-tree-node__label {
+  font-size: 12px !important;
+}
+.el-menu--popup-bottom-start {
+  padding: 8px !important;
+}
+.el-input-class {
+  margin-bottom: 8px;
+}
+.el-menu--popup-bottom-start {
+  margin-top: 10px !important;
+}
+
+
+
+
+
