@@ -21,6 +21,7 @@
     </div>
 </template>
 
+
 <script>
     import ColTable from './components/ColTable'
     import RowTable from './components/RowTable'
