@@ -1,8 +1,9 @@
 <template>
     <div class="content">
-        <header>
+        <header class="relative">
             <p>线路选择</p>
             <el-button class="button" type="info" @click="circuitCut" circle></el-button>
+            <pop-up class="absolute" :list="list" v-if="visible"></pop-up>
         </header>
         <el-input
                 class="el-input-class"
@@ -26,9 +27,10 @@
 </template>
 
 <script>
+    import PopUp from "./PopUp";
     export default {
         name: 'ColTable',
-
+        components: {PopUp},
         props: {
             trees: {
                 type: Array,
@@ -46,12 +48,23 @@
 
         data() {
             return {
+                visible: false,
                 filterText: '',
                 checkedKeys: [],
                 defaultProps: {
                     children: 'children',
                     label: 'label'
-                }
+                },
+                list: [
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
+                ]
             }
 
         },
@@ -86,7 +99,8 @@
                 }
             },
             circuitCut() {
-                this.$emit('colCut', false)
+                this.visible = true
+                // this.$emit('colCut', false)
             }
         }
     }
@@ -106,6 +120,13 @@
         header {
             @include flex-vertical-between;
             margin-bottom: 12px;
+            position: relative;
+            .absolute {
+                position: absolute;
+                top: 0;
+                left: 100%;
+                z-index: 1;
+            }
             p {
                 color: $black;
                 font-weight: 600;
