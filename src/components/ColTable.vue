@@ -62,8 +62,6 @@
                     {img:'src/img/基础应用@2.jpg', name: '系统管理'},
                     {img:'src/img/基础应用@2.jpg', name: '系统管理'},
                     {img:'src/img/基础应用@2.jpg', name: '系统管理'},
-                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
-                    {img:'src/img/基础应用@2.jpg', name: '系统管理'},
                 ]
             }
 
